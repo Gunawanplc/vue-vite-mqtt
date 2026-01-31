@@ -27,16 +27,22 @@ export function useMqtt() {
 
     const clientId = 'dashboard_user_' + Math.random().toString(16).substring(2, 10);
 
-    client = mqtt.connect('wss://gfa7b90f.ala.asia-southeast1.emqxsl.com:8084/mqtt', {
-      clientId: clientId,
-      username: 'Gunaone',
-      password: 'Gunaone123*',
+    client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
+      // clientId: clientId,
+      // username: 'Gunaone',
+      // password: 'Gunaone123*',
+
+      clientId: 'bebas_yang_penting_unik_12345',
+      path: '/mqtt', // Beberapa provider butuh ini ditegaskan
+
       keepalive: 20,
       reconnectPeriod: 0,
       // keepalive: 10,          // lebih agresif
       // reconnectPeriod: 5000,  // lebih lambat
       clean: true,
     })
+
+    // wss://gfa7b90f.ala.asia-southeast1.emqxsl.com:8084/mqtt
 
     // wss://broker.hivemq.com:8884/mqtt
     // wss://mqtt.eclipseprojects.io:443/mqtt
@@ -58,7 +64,7 @@ export function useMqtt() {
       lastOpenTime = new Date()
       isConnected.value = true
       client.subscribe('demo/vue/mqtt')
-      addLog('MQTT 7 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
+      addLog('MQTT 8 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
       startHeartbeat()        // 🔑 TAMBAH
     })
 
@@ -82,13 +88,13 @@ export function useMqtt() {
     client.on('close', () => {
       lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT 7 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
+      addLog('MQTT 8 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
     client.on('error', () => {
       isConnected.value = false
-      addLog('MQTT 7 ERROR')
+      addLog('MQTT 8 ERROR')
       startHeartbeat()        // 🔑 TAMBAH
       client?.end(true)
       client = null
