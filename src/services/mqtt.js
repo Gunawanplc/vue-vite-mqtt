@@ -30,18 +30,19 @@ export function useMqtt() {
 
     client.on('connect', () => {
       isConnected.value = true
-      console.log('MQTT CONNECTED')
+      addLog('MQTT CONNECTED')
       startHeartbeat()        // 🔑 TAMBAH
     })
 
     client.on('close', () => {
       isConnected.value = false
-      console.log('MQTT CLOSED')
+      addLog('MQTT CLOSED')
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
     client.on('error', () => {
       isConnected.value = false
+      addLog('MQTT ERROR')
       startHeartbeat()        // 🔑 TAMBAH
       client?.end(true)
       client = null
@@ -49,7 +50,10 @@ export function useMqtt() {
   }
 
   function forceReconnect() {
-    if (!navigator.onLine) return
+    if (!navigator.onLine) {
+      addLog('Reconnect skipped (offline)')
+      return
+    }
 
     if (client) {
       client.end(true)
