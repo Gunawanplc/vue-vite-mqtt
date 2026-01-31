@@ -53,7 +53,7 @@ export function useMqtt() {
     client.on('connect', () => {
       lastOpenTime = new Date()
       isConnected.value = true
-      addLog('MQTT 4 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
+      addLog('MQTT 5 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
       startHeartbeat()        // 🔑 TAMBAH
     })
 
@@ -61,13 +61,13 @@ export function useMqtt() {
     client.on('close', () => {
       lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT 4 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
+      addLog('MQTT 5 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
     client.on('error', () => {
       isConnected.value = false
-      addLog('MQTT 4 ERROR')
+      addLog('MQTT 5 ERROR')
       startHeartbeat()        // 🔑 TAMBAH
       client?.end(true)
       client = null
