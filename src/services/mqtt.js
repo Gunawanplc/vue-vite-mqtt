@@ -25,10 +25,10 @@ export function useMqtt() {
     if (client && client.connected) return
 
     client = mqtt.connect('wss://test.mosquitto.org:8081/mqtt', {
-      // keepalive: 20,
-      // reconnectPeriod: 0,
-      keepalive: 10,          // lebih agresif
-      reconnectPeriod: 5000,  // lebih lambat
+      keepalive: 20,
+      reconnectPeriod: 0,
+      // keepalive: 10,          // lebih agresif
+      // reconnectPeriod: 5000,  // lebih lambat
       clean: true,
     })
 
@@ -50,7 +50,7 @@ export function useMqtt() {
     client.on('connect', () => {
       lastOpenTime = new Date()
       isConnected.value = true
-      addLog('MQTT 3 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
+      addLog('MQTT 4 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
       startHeartbeat()        // 🔑 TAMBAH
     })
 
@@ -58,13 +58,13 @@ export function useMqtt() {
     client.on('close', () => {
       lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT 3 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
+      addLog('MQTT 4 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
     client.on('error', () => {
       isConnected.value = false
-      addLog('MQTT 3 ERROR')
+      addLog('MQTT 4 ERROR')
       startHeartbeat()        // 🔑 TAMBAH
       client?.end(true)
       client = null
