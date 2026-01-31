@@ -6,6 +6,7 @@ let heartbeatTimer = null
 let lastOpenTime
 let lastCloseTime
 const isConnected = ref(false)
+const lastMessage = ref(null)
 
 const logs = ref([])   // 👈 LOG STORE
 
@@ -53,21 +54,38 @@ export function useMqtt() {
     client.on('connect', () => {
       lastOpenTime = new Date()
       isConnected.value = true
-      addLog('MQTT 5 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
+      client.subscribe('demo/vue/mqtt')
+      addLog('MQTT 6 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
       startHeartbeat()        // 🔑 TAMBAH
+    })
+
+    client.on('message', (topic, payload) => {
+      try {
+        lastMessage.value = {
+          topic,
+          data: JSON.parse(payload.toString()),
+          time: new Date().toLocaleTimeString()
+        }
+      } catch {
+        lastMessage.value = {
+          topic,
+          data: payload.toString(),
+          time: new Date().toLocaleTimeString()
+        }
+      }
     })
 
 
     client.on('close', () => {
       lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT 5 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
+      addLog('MQTT 6 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
     client.on('error', () => {
       isConnected.value = false
-      addLog('MQTT 5 ERROR')
+      addLog('MQTT 6 ERROR')
       startHeartbeat()        // 🔑 TAMBAH
       client?.end(true)
       client = null
@@ -129,6 +147,7 @@ export function useMqtt() {
     forceReconnect,
     disconnect,
     isConnected,
+    lastMessage,
     logs          // 👈 expose logs
   }
 }

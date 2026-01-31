@@ -7,6 +7,7 @@ const {
   forceReconnect,
   disconnect,
   isConnected,
+  lastMessage,
   logs
 } = useMqtt()
 
