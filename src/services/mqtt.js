@@ -41,7 +41,7 @@ export function useMqtt() {
     client.on('close', () => {
       lastCloseTime = Date.now()
       isConnected.value = false
-      addLog('MQTT CLOSED')
+      addLog('MQTT CLOSED at ' + lastCloseTime)
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
