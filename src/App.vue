@@ -21,6 +21,7 @@ onBeforeUnmount(() => {
 <template>
   <div style="padding:20px">
     <h2>Vue Vite + MQTT Realtime</h2>
+    <h3>topic : demo/vue/mqtt</h3>
 
     <p>
       Status:
