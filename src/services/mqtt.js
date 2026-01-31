@@ -27,7 +27,7 @@ export function useMqtt() {
 
     const clientId = 'dashboard_user_' + Math.random().toString(16).substring(2, 10);
 
-    client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
+    client = mqtt.connect('wss://test.mosquitto.org:8081/mqtt', {
       // clientId: clientId,
       // username: 'Gunaone',
       // password: 'Gunaone123*',
