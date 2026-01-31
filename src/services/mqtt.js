@@ -3,6 +3,8 @@ import { ref } from 'vue'
 
 let client = null
 let heartbeatTimer = null
+let lastOpenTime
+let lastCloseTime
 const isConnected = ref(false)
 
 const logs = ref([])   // 👈 LOG STORE
@@ -30,6 +32,7 @@ export function useMqtt() {
       clean: true,
     })
 
+    // wss://broker.hivemq.com:8884/mqtt
     // wss://mqtt.eclipseprojects.io:443/mqtt
     // wss://broker.emqx.io:8084/mqtt
     // wss://test.mosquitto.org:8081/mqtt
@@ -42,27 +45,26 @@ export function useMqtt() {
     //   clean: true,
     // })
 
-    let lastOpenTime
+    
 
     client.on('connect', () => {
       lastOpenTime = new Date()
       isConnected.value = true
-      addLog('MQTT CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
+      addLog('MQTT 3 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
       startHeartbeat()        // 🔑 TAMBAH
     })
 
-    let lastCloseTime
 
     client.on('close', () => {
       lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
+      addLog('MQTT 3 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
     client.on('error', () => {
       isConnected.value = false
-      addLog('MQTT ERROR')
+      addLog('MQTT 3 ERROR')
       startHeartbeat()        // 🔑 TAMBAH
       client?.end(true)
       client = null
@@ -85,7 +87,7 @@ export function useMqtt() {
       client = null
     }
 
-    setTimeout(connect, 1000)
+    setTimeout(connect, 4000)
   }
 
   function disconnect() {
