@@ -24,7 +24,9 @@ export function useMqtt() {
   function connect() {
     if (client && client.connected) return
 
-    client = mqtt.connect('wss://test.mosquitto.org:8081/mqtt', {
+    client = mqtt.connect('wss://ecb3e42f2534425cad2b77476a1d9435.s1.eu.hivemq.cloud:8884/mqtt', {
+      username: 'Gunaone',
+      password: 'Gunaone123*',
       keepalive: 20,
       reconnectPeriod: 0,
       // keepalive: 10,          // lebih agresif
@@ -36,6 +38,7 @@ export function useMqtt() {
     // wss://mqtt.eclipseprojects.io:443/mqtt
     // wss://broker.emqx.io:8084/mqtt
     // wss://test.mosquitto.org:8081/mqtt
+    // wss://ecb3e42f2534425cad2b77476a1d9435.s1.eu.hivemq.cloud:8884/mqtt
 
     // client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
     //   // keepalive: 20,
@@ -139,7 +142,7 @@ export function useMqtt() {
 // export function connectMQTT() {
 //   if (client && client.connected) return
 
-//   client = mqtt.connect('wss://xxxx.hivemq.cloud:8884/mqtt', {
+//   client = mqtt.connect('wss://ecb3e42f2534425cad2b77476a1d9435.s1.eu.hivemq.cloud:8884/mqtt', {
 //     keepalive: 20,
 //     reconnectPeriod: 0,     // ❗ matikan auto reconnect bawaan
 //     connectTimeout: 10000,
