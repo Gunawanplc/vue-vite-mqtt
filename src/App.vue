@@ -10,13 +10,29 @@ const {
   lastMessage
 } = useMqtt()
 
+const handleVisibility = () => {
+  if (document.visibilityState === 'visible') {
+    connect()
+  } else {
+    disconnect()
+  }
+}
+
+const handleUnload = () => {
+  disconnect()
+}
+
 onMounted(() => {
   connect()
+  document.addEventListener('visibilitychange', handleVisibility)
+  window.addEventListener('beforeunload', handleUnload)
 })
 
 onBeforeUnmount(() => {
-  disconnect()
+  document.removeEventListener('visibilitychange', handleVisibility)
+  window.removeEventListener('beforeunload', handleUnload)
 })
+
 </script>
 
 <template>
@@ -46,7 +62,7 @@ onBeforeUnmount(() => {
 <style>
 .app {
   min-height: 100vh;
-  padding-bottom: 96px; /* space for nav + status */
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
 }
 
 /* MQTT STATUS */
