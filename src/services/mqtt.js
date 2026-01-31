@@ -25,7 +25,10 @@ export function useMqtt() {
   function connect() {
     if (client && client.connected) return
 
-    client = mqtt.connect('wss://ecb3e42f2534425cad2b77476a1d9435.s1.eu.hivemq.cloud:8884/mqtt', {
+    const clientId = 'dashboard_user_' + Math.random().toString(16).substring(2, 10);
+
+    client = mqtt.connect('wss://gfa7b90f.ala.asia-southeast1.emqxsl.com:8084/mqtt', {
+      clientId: clientId,
       username: 'Gunaone',
       password: 'Gunaone123*',
       keepalive: 20,
@@ -55,7 +58,7 @@ export function useMqtt() {
       lastOpenTime = new Date()
       isConnected.value = true
       client.subscribe('demo/vue/mqtt')
-      addLog('MQTT 6 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
+      addLog('MQTT 7 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
       startHeartbeat()        // 🔑 TAMBAH
     })
 
@@ -79,13 +82,13 @@ export function useMqtt() {
     client.on('close', () => {
       lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT 6 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
+      addLog('MQTT 7 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
     client.on('error', () => {
       isConnected.value = false
-      addLog('MQTT 6 ERROR')
+      addLog('MQTT 7 ERROR')
       startHeartbeat()        // 🔑 TAMBAH
       client?.end(true)
       client = null
