@@ -22,7 +22,7 @@ export function useMqtt() {
   function connect() {
     if (client && client.connected) return
 
-    client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
+    client = mqtt.connect('wss://test.mosquitto.org:8081/mqtt', {
       // keepalive: 20,
       // reconnectPeriod: 0,
       keepalive: 10,          // lebih agresif
@@ -30,18 +30,33 @@ export function useMqtt() {
       clean: true,
     })
 
+    // wss://mqtt.eclipseprojects.io:443/mqtt
+    // wss://broker.emqx.io:8084/mqtt
+    // wss://test.mosquitto.org:8081/mqtt
+
+    // client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
+    //   // keepalive: 20,
+    //   // reconnectPeriod: 0,
+    //   keepalive: 10,          // lebih agresif
+    //   reconnectPeriod: 5000,  // lebih lambat
+    //   clean: true,
+    // })
+
+    let lastOpenTime
+
     client.on('connect', () => {
+      lastOpenTime = new Date()
       isConnected.value = true
-      addLog('MQTT CONNECTED')
+      addLog('MQTT CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
       startHeartbeat()        // 🔑 TAMBAH
     })
 
-    let lastCloseTime = 0
+    let lastCloseTime
 
     client.on('close', () => {
-      lastCloseTime = Date.now()
+      lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT CLOSED at ' + lastCloseTime)
+      addLog('MQTT CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
