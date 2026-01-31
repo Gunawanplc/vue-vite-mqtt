@@ -22,7 +22,7 @@ export function useMqtt() {
   function connect() {
     if (client && client.connected) return
 
-    client = mqtt.connect('wss://xxx.hivemq.cloud:8884/mqtt', {
+    client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
       keepalive: 20,
       reconnectPeriod: 0,
       clean: true,

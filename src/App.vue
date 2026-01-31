@@ -7,7 +7,7 @@ const {
   forceReconnect,
   disconnect,
   isConnected,
-  addLog
+  logs
 } = useMqtt()
 
 const handleVisibility = () => {
