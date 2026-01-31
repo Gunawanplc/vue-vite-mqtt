@@ -23,8 +23,10 @@ export function useMqtt() {
     if (client && client.connected) return
 
     client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', {
-      keepalive: 20,
-      reconnectPeriod: 0,
+      // keepalive: 20,
+      // reconnectPeriod: 0,
+      keepalive: 10,          // lebih agresif
+      reconnectPeriod: 5000,  // lebih lambat
       clean: true,
     })
 
@@ -34,7 +36,10 @@ export function useMqtt() {
       startHeartbeat()        // 🔑 TAMBAH
     })
 
+    let lastCloseTime = 0
+
     client.on('close', () => {
+      lastCloseTime = Date.now()
       isConnected.value = false
       addLog('MQTT CLOSED')
       stopHeartbeat()         // 🔑 TAMBAH
@@ -52,6 +57,11 @@ export function useMqtt() {
   function forceReconnect() {
     if (!navigator.onLine) {
       addLog('Reconnect skipped (offline)')
+      return
+    }
+
+    if (Date.now() - lastCloseTime < 3000) {
+      addLog('Reconnect delayed (broker cooldown)')
       return
     }
 
