@@ -2,37 +2,32 @@
 import { onMounted, onBeforeUnmount } from 'vue'
 import { useMqtt } from './services/mqtt'
 
-// MQTT GLOBAL
 const {
   connect,
+  forceReconnect,
   disconnect,
   isConnected,
-  lastMessage
+  addLog
 } = useMqtt()
 
 const handleVisibility = () => {
   if (document.visibilityState === 'visible') {
-    connect()
-  } else {
-    disconnect()
+    forceReconnect()
   }
-}
-
-const handleUnload = () => {
-  disconnect()
 }
 
 onMounted(() => {
   connect()
   document.addEventListener('visibilitychange', handleVisibility)
-  window.addEventListener('beforeunload', handleUnload)
+  window.addEventListener('online', forceReconnect)
+  window.addEventListener('offline', disconnect)
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('visibilitychange', handleVisibility)
-  window.removeEventListener('beforeunload', handleUnload)
+  window.removeEventListener('online', forceReconnect)
+  window.removeEventListener('offline', disconnect)
 })
-
 </script>
 
 <template>
@@ -45,8 +40,15 @@ onBeforeUnmount(() => {
     <div class="mqtt-status">
       <span
         :class="isConnected ? 'online' : 'offline'">
-        {{ isConnected ? 'MQTT CONNECTED' : 'MQTT DISCONNECTED' }}
+        {{ isConnected ? 'MQTT CONNECTED v2' : 'MQTT DISCONNECTED v2' }}
       </span>
+    </div>
+
+    <!-- 🔥 MQTT LOG PANEL -->
+    <div class="mqtt-log">
+      <div v-for="(log, i) in logs" :key="i">
+        {{ log }}
+      </div>
     </div>
 
     <!-- BOTTOM NAVIGATION -->
@@ -111,5 +113,19 @@ onBeforeUnmount(() => {
 .router-link-active {
   color: #1976d2;
   font-weight: bold;
+}
+
+.mqtt-log {
+  position: fixed;
+  bottom: 96px;
+  left: 0;
+  right: 0;
+  max-height: 160px;
+  overflow-y: auto;
+  background: #000;
+  color: #0f0;
+  font-size: 11px;
+  padding: 6px;
+  font-family: monospace;
 }
 </style>
