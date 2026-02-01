@@ -6,9 +6,22 @@
     </header>
 
     <main class="grid-layout">
-      <section class="visual" style="background-color: transparent;">
+      <section class="card visual">
+        <!-- <h3>Live Floor Plan</h3> -->
         <IndustrialMap :machineA="data.machineA" :storageLevel="data.tankLevel" />
       </section>
+
+      <!-- <aside class="card metrics">
+        <h3>Live Metrics</h3>
+        <div class="metric-item">
+          <span>Production Rate</span>
+          <strong>85%</strong>
+        </div>
+        <div class="metric-item">
+          <span>Tank Level</span>
+          <progress :value="data.tankLevel" max="150"></progress>
+        </div>
+      </aside> -->
     </main>
     </div>
   </template>
@@ -37,7 +50,7 @@
 } */
 :root { font-family: Inter, sans-serif; background: #0f172a; color: white; }
 .dashboard { padding: 0.5rem; }
-.grid-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 80%;max-height: 90%;padding-bottom: 2rem;}
+.grid-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 100%;max-height: 90%;padding-bottom: 2rem;}
 /* .grid-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; } */
 .card { background: #d3d3d3; border-radius: 20px; padding: 1.5rem; border: 1px solid #334155; }
 /* .card { background: #1e293b; border-radius: 12px; padding: 1.5rem; border: 1px solid #334155; } */
@@ -76,14 +89,13 @@ html, body {
 }
 
 /* 4. Card Visual dibuat menjadi Flex Container */
-/* .visual { */
-  /* display: flex; */
-  /* padding: 10px; */
-  /* flex-direction: column; */
-  /* height: 100%; Isi penuh grid cell */
-  /* min-height: 0;  */
-  /* background-color: bisque; */
-/* } */
+.card.visual {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  height: 100%; /* Isi penuh grid cell */
+  min-height: 0; 
+}
 
 /* 5. SVG Wrapper/Container */
 .svg-container {
