@@ -27,13 +27,13 @@ export function useMqtt() {
 
     const clientId = 'dashboard_user_' + Math.random().toString(16).substring(2, 10);
 
-    client = mqtt.connect('wss://test.mosquitto.org:8081/mqtt', {
-      // clientId: clientId,
-      // username: 'Gunaone',
-      // password: 'Gunaone123*',
+    client = mqtt.connect('wss://gfa7b90f.ala.asia-southeast1.emqxsl.com:8084/mqtt', {
+      clientId: clientId,
+      username: 'Gunaone',
+      password: 'Gunaone123*',
 
-      clientId: 'bebas_yang_penting_unik_12345',
-      path: '/mqtt', // Beberapa provider butuh ini ditegaskan
+      // clientId: 'bebas_yang_penting_unik_12345',
+      // path: '/mqtt', // Beberapa provider butuh ini ditegaskan
 
       keepalive: 20,
       reconnectPeriod: 0,
@@ -88,7 +88,7 @@ export function useMqtt() {
     client.on('close', () => {
       lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT 8 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-CA"))
+      addLog('MQTT 8 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-fr"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
