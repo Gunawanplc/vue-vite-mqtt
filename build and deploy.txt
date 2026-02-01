@@ -42,3 +42,6 @@ $ npm run deploy
 > gh-pages -d dist
 
 Published
+
+git add .;git commit -m "update feature";git push;
+ npm run build;npm run deploy
