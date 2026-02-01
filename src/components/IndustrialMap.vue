@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-container">
     <div class="svg-wrapper">
-      <svg viewBox="20 0 400 480" xmlns="http://www.w3.org/2000/svg" width="445px" height="480px" preserveAspectRatio="none">
+      <svg viewBox="20 0 360 480" xmlns="http://www.w3.org/2000/svg" width="400px" height="480px" preserveAspectRatio="none">
 
   <defs>
     <!-- HEXAGON PATTERN (SHORT ROOF) -->
@@ -232,7 +232,7 @@ const valveOpening = ref(70);
 <style scoped>
 .mobile-container {
   /* background: #020617; */
-  background: #ff0000;
+  background: #000000;
   min-height: 53vh;
   display: flex;
   flex-direction: column;
