@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <header style="color :white;padding:4px;background-color: black;font-size: 36px;font-weight: bold;">
-      <span>Water Gate System 1</span>
+      <span>Water Gate System</span>
       <!-- <div class="status-chip">System Online</div> -->
     </header>
 
