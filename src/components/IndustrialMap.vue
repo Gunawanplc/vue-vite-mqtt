@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-container">
     <div class="svg-wrapper">
-      <svg viewBox="20 0 390 480" xmlns="http://www.w3.org/2000/svg" width="390px" height="480px" preserveAspectRatio="none">
+      <svg viewBox="20 0 380 480" xmlns="http://www.w3.org/2000/svg" width="370px" height="480px" preserveAspectRatio="none">
 
   <defs>
     <!-- HEXAGON PATTERN (SHORT ROOF) -->
