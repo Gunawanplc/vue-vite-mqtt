@@ -2,6 +2,20 @@
 import { useMqtt } from '../services/mqtt'
 
 const { lastMessage, isConnected } = useMqtt()
+
+// Di dalam method atau setup Vue Anda
+const handleExit = () => {
+    if (window.Android && window.Android.exitApp) {
+        window.Android.exitApp();
+    } else {
+        console.warn("Fungsi Android.exitApp tidak ditemukan (Mungkin sedang di Browser)");
+        // Tambahkan fallback jika dibuka di chrome biasa
+        if(confirm("Keluar dari halaman ini?")) {
+            window.close();
+        }
+    }
+};
+
 </script>
 
 <template>
@@ -18,5 +32,9 @@ const { lastMessage, isConnected } = useMqtt()
       <p><b>Topic:</b> {{ lastMessage.topic }}</p>
       <p><b>Data:</b> {{ lastMessage.data }}</p>
     </div>
+
+    <button @click="handleExit" class="btn-exit">
+      EXIT APP
+    </button>
   </div>
 </template>

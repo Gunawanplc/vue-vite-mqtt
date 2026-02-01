@@ -41,16 +41,16 @@ onBeforeUnmount(() => {
     <div class="mqtt-status">
       <span
         :class="isConnected ? 'online' : 'offline'">
-        {{ isConnected ? 'MQTT CONNECTED v2' : 'MQTT DISCONNECTED v2' }}
+        {{ isConnected ? 'MQTT CONNECTED v1.3' : 'MQTT DISCONNECTED v1.3' }}
       </span>
     </div>
 
     <!-- 🔥 MQTT LOG PANEL -->
-    <div class="mqtt-log">
+    <!-- <div class="mqtt-log">
       <div v-for="(log, i) in logs" :key="i">
         {{ log }}
       </div>
-    </div>
+    </div> -->
 
     <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
@@ -64,7 +64,7 @@ onBeforeUnmount(() => {
 
 <style>
 .app {
-  min-height: 100vh;
+  min-height: 83vh;
   padding-bottom: calc(96px + env(safe-area-inset-bottom));
 }
 

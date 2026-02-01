@@ -63,8 +63,9 @@ export function useMqtt() {
     client.on('connect', () => {
       lastOpenTime = new Date()
       isConnected.value = true
-      client.subscribe('demo/vue/mqtt')
-      addLog('MQTT 8 CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
+      // client.subscribe('demo/vue/mqtt')
+      client.subscribe('location/updates')
+      addLog('MQTT CONNECTED at ' + lastOpenTime.toLocaleDateString("Fr-CA") +" "+lastOpenTime.toLocaleTimeString("Fr-fr"))
       startHeartbeat()        // 🔑 TAMBAH
     })
 
@@ -88,13 +89,13 @@ export function useMqtt() {
     client.on('close', () => {
       lastCloseTime = new Date()
       isConnected.value = false
-      addLog('MQTT 8 CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-fr"))
+      addLog('MQTT CLOSED at ' + lastCloseTime.toLocaleDateString("Fr-CA") +" "+ lastCloseTime.toLocaleTimeString("Fr-fr"))
       stopHeartbeat()         // 🔑 TAMBAH
     })
 
     client.on('error', () => {
       isConnected.value = false
-      addLog('MQTT 8 ERROR')
+      addLog('MQTT ERROR')
       startHeartbeat()        // 🔑 TAMBAH
       client?.end(true)
       client = null
